@@ -1,44 +1,117 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom'
+import "./navbar.css"
+
+import { AppContext } from "../contextService/contextservice"
 
 export default function Navbar() {
 
-    return (
-        <>
-            <header className="header-area header-sticky">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-12">
-                            <nav className="main-nav">
-                                {/* ***** Logo Start ***** */}
-                                <a href="index.html" className="logo">Lava</a>
-                                {/* ***** Logo End ***** */}
-                                {/* ***** Menu Start ***** */}
-                                <ul className="nav">
-                                    <li className="scroll-to-section"><a href="#" className="menu-item">Home</a></li>
-                                    <li className="scroll-to-section"><a href="#" className="menu-item">About</a></li>
-                                    <li className="scroll-to-section"><a href="#" className="menu-item">Login</a></li>
-                                    <li className="scroll-to-section"><a href="#" className="menu-item">Register</a></li>
-                                    <li className="submenu"><a href="#">Drop Down</a>
-                                        <ul>
-                                            <li><a href className="menu-item">About Us</a></li>
-                                            <li><a href className="menu-item">Features</a></li>
-                                            <li><a href className="menu-item">Blog</a></li>
-                                            <li><a href className="menu-item">FAQ</a></li>
-                                        </ul>
-                                    </li>
-                                    <li className="scroll-to-section"><a href="#" className="menu-item">Contact Us</a></li>
-                                </ul>
-                                <a className="menu-trigger"><span>Menu</span></a>
-                                {/* ***** Menu End ***** */}
-                            </nav>
+    let context = useContext(AppContext)
+    let [userState, setUserState] = context.userState;
+    let [user, setUser] = context.user;
+
+    let history = useHistory();
+
+    useEffect(async () => {
+        let url = String(process.env.REACT_APP_BACKEND_URL) + '/checkloginstatus';
+        let statusRequest = await fetch(url, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: "include",
+            mode: "cors"
+        })
+        if (statusRequest.status == 200) {
+            let user = await statusRequest.json()
+            setUserState(true);
+            setUser(user)
+            history.push("/")
+        }
+    }, [])
+
+    async function handleLogout(e) {
+
+        let url = String(process.env.REACT_APP_BACKEND_URL) + "/logout"
+
+        let logoutReq = await fetch(url, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: "include",
+            mode: "cors",
+        })
+
+        if (logoutReq.status == 200) {
+            setUserState(false)
+            setUser({})
+            history.push("/")
+        } else {
+            console.log("error occured")
+        }
+
+    }
+
+    if (userState) {
+        return (
+            <>
+                <header className="header-area header-sticky">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-12">
+                                <nav className="main-nav">
+                                    <div className="logo"> CHATME </div>
+                                    <ul className="nav">
+                                        <Link to="/">
+                                            <li className="menu-items">Home</li>
+                                        </Link>
+                                        <li className="menu-items">About</li>
+
+                                        <li className="menu-items">{`Welcome-${user.name}`}</li>
+
+                                        <button className="log-out-btn" onClick={(e) => handleLogout(e)}>Logout</button>
+
+                                        <li className="menu-items">Contact Support</li>
+                                    </ul>
+                                    <a className="menu-trigger"><span>Menu</span></a>
+                                </nav>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </header>
-        </>
-    )
+                </header>
+            </>
+        )
 
-
-
-
+    } else {
+        return (
+            <>
+                <header className="header-area header-sticky">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-12">
+                                <nav className="main-nav">
+                                    <div className="logo"> CHATME </div>
+                                    <ul className="nav">
+                                        <Link to="/">
+                                            <li className="menu-items">Home</li>
+                                        </Link>
+                                        <li className="menu-items">About</li>
+                                        <Link to="/login">
+                                            <li className="menu-items">Login</li>
+                                        </Link>
+                                        <Link to="Register">
+                                            <li className="menu-items">Register</li>
+                                        </Link>
+                                        <li className="menu-items">Contact Support</li>
+                                    </ul>
+                                    <a className="menu-trigger"><span>Menu</span></a>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+            </>
+        )
+    }
 }
