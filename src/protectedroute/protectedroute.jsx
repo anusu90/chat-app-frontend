@@ -16,7 +16,7 @@ export default function ProtectedRoute({component:Component,data, ...rest}){
 
 
     return ( 
-        (userState)?<Route {...rest} render = {(props)=> {return <Component {...props}{...data}/>}}></Route>: <Redirect to ="/"/>
+        (userState)?<Route {...rest} render = {(props)=> {return <Component {...props}{...data}/>}}></Route>: <Redirect to ="/login"/>
     )
 
 

@@ -19,12 +19,13 @@ function App() {
     <>
       <AppProvider>
         <Router>
-          <Route path="/login" component={Login} exact></Route>
-          <Route path="/login" render={() => <Login />} exact></Route>
-          <Route path="/Register" component={Register} exact></Route>
           <Route path="/" component={Navbar}></Route>
-          <Route path="/" component={Welcome} exact></Route>
-          <ProtectedRoute path="/dashboard" component={Dashboard} exact data={data}></ProtectedRoute>
+          <Switch>
+            <Route path="/login" component={Login} exact></Route>
+            <Route path="/Register" component={Register} exact></Route>
+            <Route path="/" component={Welcome} exact></Route>
+            <ProtectedRoute path="/dashboard" component={Dashboard} exact data={data}></ProtectedRoute>
+          </Switch>
         </Router>
       </AppProvider>
     </>
