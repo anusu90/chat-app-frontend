@@ -72,7 +72,11 @@ export default function Navbar() {
 
                                         <button className="log-out-btn" onClick={(e) => handleLogout(e)}>Logout</button>
 
-                                        <li className="menu-items">Contact Support</li>
+                                        <Link to="/dashboard">
+
+                                            <li className="menu-items">Dashboard</li>
+                                        </Link>
+
                                     </ul>
                                     <a className="menu-trigger"><span>Menu</span></a>
                                 </nav>

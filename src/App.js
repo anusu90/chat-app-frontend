@@ -7,6 +7,8 @@ import Welcome from "./welcome/welcome"
 import Preloader from "./preloader/preloader"
 import Login from "./login/login"
 import Register from "./register/register"
+import Dashboard from "./dashboard/dashboard";
+import ProtectedRoute from "./protectedroute/protectedroute";
 
 //CONTEXT
 import { AppProvider } from "./contextService/contextservice"
@@ -20,6 +22,7 @@ function App() {
           <Route path="/Register" component={Register} exact></Route>
           <Route path="/" component={Navbar}></Route>
           <Route path="/" component={Welcome} exact></Route>
+          <ProtectedRoute path="/dashboard" component={Dashboard} exact></ProtectedRoute>
         </Router>
       </AppProvider>
     </>
