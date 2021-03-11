@@ -26,7 +26,7 @@ export default function Navbar() {
             let user = await statusRequest.json()
             setUserState(true);
             setUser(user)
-            history.push("/")
+            history.push("/dashboard")
         }
     }, [])
 

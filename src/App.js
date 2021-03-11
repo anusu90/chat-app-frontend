@@ -14,15 +14,17 @@ import ProtectedRoute from "./protectedroute/protectedroute";
 import { AppProvider } from "./contextService/contextservice"
 
 function App() {
+  let data = {}
   return (
     <>
       <AppProvider>
         <Router>
           <Route path="/login" component={Login} exact></Route>
+          <Route path="/login" render={() => <Login />} exact></Route>
           <Route path="/Register" component={Register} exact></Route>
           <Route path="/" component={Navbar}></Route>
           <Route path="/" component={Welcome} exact></Route>
-          <ProtectedRoute path="/dashboard" component={Dashboard} exact></ProtectedRoute>
+          <ProtectedRoute path="/dashboard" component={Dashboard} exact data={data}></ProtectedRoute>
         </Router>
       </AppProvider>
     </>

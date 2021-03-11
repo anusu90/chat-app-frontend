@@ -54,3 +54,7 @@ nav ul {
   color: aliceblue;
   letter-spacing: 2px;
 }
+
+.main-nav {
+  opacity: 1;
+}

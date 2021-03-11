@@ -8,7 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { AppContext } from "../contextService/contextservice"
 
-export default function Login() {
+export default function Login(props) {
+
+    console.log(props)
 
     let context = useContext(AppContext)
     let [userState, setUserState] = context.userState;
